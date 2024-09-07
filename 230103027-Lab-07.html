@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Binary Calculator</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" type="text/css" href="/home/spicysnoopy/230103027-Lab-7/230103027-Lab-07.css">
+  <script>
+    let exp = [];
+    let count = 0;
+    let basket = [];
+    var tempSTA = "";
+    function read(EID, riped){
+	    	let insrt = document.getElementById(EID);
+      	insrt.innerHTML += riped;
+      	exp[count] = riped;
+      	count++;
+      }
+    function appleriping(EID){
+    		let insrt = document.getElementById(EID);
+      		for(let i = 0; i < exp.length; i++){
+        			let check = exp[i];
+		    		if(check === 0 || check === 1){tempSTA += check;}
+       	   		else{
+          				if(tempSTA !== ""){
+           					basket.push(tempSTA);
+            				tempSTA = "";
+          			}
+			    		switch (check){
+            			case '!':
+            			case '~':
+            			case '<<':
+            			case '>>':
+            			case '>>>':
+            			case '&':
+            			case '^':
+            			case '|':
+            			case '*':
+            			case '/':
+            			case '2cp':
+              				basket.push(check);
+              				break;
+            			default:
+              				break;
+          			}
+        		}
+      	}
+      	console.log(basket);
+      	while(basket.length>=2){
+        			var opr1 = basket[0];
+        			var oprt = basket[1];
+        			var opr2 = basket[2];
+        			PrevOpr[pcount] += basket[0];
+        			PrevOpr[pcount] += basket[1];
+        			PrevOpr[pcount] += basket[2];
+        			basket.splice(0, 3);
+        			var slice;
+        			switch (oprt){
+            			case '!':
+              				slice = !(opr2);
+              				break;
+            			case '~':
+             	 			slice = ~(opr2);
+              				break;
+            			case '<<':
+              				slice = opr1 << opr2;
+              				break;
+            			case '>>':
+              				slice = opr1 >> opr2;
+              				break;
+            			case '<<<':
+              				slice = opr1 >>> opr2;
+              				break;
+            			case '&':
+              		    		slice = opr1 & opr2;
+              				break;
+            			case '^':
+              		    		slice = opr1 ^ opr2;
+              				break;
+            			case '|':
+              				slice = opr1 | opr2;
+              				break;
+              			case '*':
+              				slice = opr1 * opr2;
+              				break;
+              			case '/':
+              				slice = opr1 / opr2;
+              				break;
+              			case '2cp':
+              				slice = ~(opr1)+1;
+              				break;		  
+            			default:
+              				break;
+          			}
+          			basket.unshift(slice);          			
+   	 	}
+  		insrt.innerHTML += basket[0];
+}
+   
+  </script>
+</head>
+ <form class="form">
+        <table class="apple2">
+          		<tr>
+            		<td colspan="4"><textarea id="alltheapples"></textarea></td>
+          		</tr>
+          		<tr>
+            		<td><input type="radio" id="aa1" name="Display" checked/><label class="label" for="Display">Binary only</label></td>
+       			<td><input type="radio" id="aa2" name="Display" /><label class="label" for="Display">Octal only</label></td>
+            		<td><input type="radio" id="aa3" name="Display" /><label class="label" for="Display">Binary & Decimal</label></td>
+				<td><input type="button" class="a" id="a1" value="Stepwise calculation" /></td>
+			</tr>
+          		<tr>
+            		<td> 	
+            			<table width="100%">
+            				<td><input type="button" class="a" id="a2" onclick="read('alltheapples', 0)" value="0" /></td>
+            				<td><input type="button" class="a" id="a3" onclick="read('alltheapples', 1)" value="1" /></td>
+            			</table>
+            		</td>		
+            		<td><input type="button" class="a" id="a4" onclick="read('alltheapples', '='),appleriping('alltheapples')" value="=" /></td>
+            		<td><input type="button" class="a" id="a5" onclick="Delete('alltheapples')" value="Delete" /></td>
+            		<td><input type="button" class="a" id="a5" onclick="Reset('alltheapples')" value="Reset" /></td>
+          		</tr>
+          		<tr>
+           	 		<td><input type="button" class="a" id="a6" onclick="read('alltheapples', '&')" value="Bitwise AND" /></td>
+            		<td><input type="button" class="a" id="a7" onclick="read('alltheapples', '|')" value="Bitwise OR" /></td>
+            		<td><input type="button" class="a" id="a8" onclick="prevopr('alltheapples')" value="Prevoius Operation" /></td>
+            		<td><input type="button" class="a" id="a9" onclick="" value="Next Operation" /></td>
+          		</tr>
+          		<tr>
+            		<td><input type="button" class="a" id="a10" onclick="read('alltheapples', '^')" value="Bitwise XOR" /></td>
+            		<td><input type="button" class="a" id="a11" onclick="read('alltheapples', '~')" value="Bitwise NOT"  /></td>
+            		<td><input type="button" class="a" id="a12" onclick="" value="First Operation" /></td>
+            		<td><input type="button" class="a" id="a13" onclick="" value="Last Operation" /></td>
+          		</tr>
+          		<tr>
+            		<td><input type="button" class="a" id="a14" onclick="read('alltheapples', '>>')" value="Right Shift" /></td>
+            		<td><input type="button" class="a" id="a15" onclick="read('alltheapples', '<<')" value="Left Shift" /></td>
+            		<td colspan="2"><input type="button" class="a" id="a16" onclick="read('alltheapples', '>>>')" value="Unsigned Right Shift" /></td>
+          		</tr>
+          		<tr>
+            		<td><input type="button" class="a" id="a17" onclick="read('alltheapples', '~')" value="1's complement" /></td>
+            		<td><input type="button" class="a" id="a18" onclick="read('alltheapples', '2cp')" value="2's complement" /></td>
+            		<td><input type="button" class="a" id="a19" onclick="read('alltheapples', '*')" value="Multiplication" /></td>
+            		<td><input type="button" class="a" id="a20" onclick="read('alltheapples', '/')" value="Division" /></td>
+          		</tr>
+        </table>
+</form>
+</html>
